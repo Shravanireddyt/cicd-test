@@ -1,0 +1,55 @@
+<!-- <div *ngIf="spinner" class="spinner-border text-primary" style="margin: 20% 40%;"></div>
+<div *ngIf="!showDetails">
+    
+    <table  *ngIf="!spinner" class="table table-responsive-sm table-hover table-outline mb-0" id="tab">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>PAN</th>
+            <th >Created Date</th>
+            <th>Forms</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of uccData;let i=index">  
+            <td><button class="btn btn-primary" (click)="details(person)">{{ person.id }}</button></td>
+            <td>{{ person.company_name }}</td>
+            <td>{{person.pan}}</td>
+            <td>{{ person.created_time | date:"MM/dd/yy"  }}</td>
+            <td><button class="btn btn-primary active" (click)="upload(person)">Upload</button></td>
+           
+          </tr>
+        </tbody>
+        
+      </table>
+</div> -->
+<!-- <button class="btn btn-primary active" (click)="upload()">Upload</button> -->
+
+
+
+<div *ngIf="showDetails" class="float-left col-12 mt-5 border">
+  <h3 class="text-center">Investor UnsignedForms</h3>
+  <!-- <button class=" float-right btn btn-primary active">Submit</button> -->
+       <div class="float-left  col-md-4 col-xl-4 col-sm-6" *ngFor="let val of imageURL;let i=index">
+         <div class="float-left border">
+          <img src="../../../../assets/img/ri.png" alt="sadf" width="100%">
+         </div>
+         
+          <div class="float-left m-0 p-0 col-md-12 col-xl-12 col-sm-6">
+            <div class="float-right m-0 p-0  col-md-6 col-xl-6 col-sm-6">
+              <button class="btn btn-success" (click)="viewDoc(val)">View</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary active mt-3" (click)="updateunsigned()">Update</button>
+
+        <!-- <button class="btn btn-success mt-3 float-right" (click)="back()">Go Back</button> -->
+
+</div>
+<div *ngIf="no" class="border text-center">
+  <h3 class="text-center">No forms found for Investor!!</h3>
+  <button class="btn btn-primary active mt-3" (click)="updateunsigned()">upload</button>
+</div>

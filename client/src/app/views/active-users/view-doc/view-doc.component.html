@@ -1,0 +1,4 @@
+
+<button class="float-right btn btn-danger" (click)="close()">X</button>
+<img *ngIf="showImg" id="myimage" [src]='imgURL' height="500px" width="100%"/>
+<iframe  *ngIf="!showImg" width="100%" height="500px" id="iframe" src=""></iframe>

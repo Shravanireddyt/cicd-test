@@ -1,0 +1,96 @@
+<!-- <ejs-richtexteditor #richtxt id='defaultRTE'></ejs-richtexteditor> -->
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    
+    <form [formGroup]="postForm">
+
+        <div class="datacontainer col-xl-12 col-sm-12 col-lg-12 ">
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12">
+            
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="pan" class="text-center">Post Title</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <input type="text" class="form-control" formControlName="ptitle" placeholder="Enter Title">
+                </div>
+            </div>
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mt-2">
+                
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="phn" class="text-center">Mini Description</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <textarea name="" id="" cols="30" formControlName="mdec" rows="3" style="width: 100%;"></textarea>
+                </div>
+            </div>
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mb-2">
+                
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="phn" class="text-center">Meta Title</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <input type="text" class="form-control" formControlName="mtitle" placeholder="Enter Meta Title">
+                </div>
+            </div>
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mb-2">
+                
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="phn" class="text-center">Author Name</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <input type="text" class="form-control" formControlName="author" placeholder="Author Name">
+                </div>
+            </div>
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mb-2">
+                
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="phn" class="text-center">Youtube URL</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <input type="text" class="form-control" formControlName="yurl" placeholder="Youtube Url">
+                </div>
+            </div>
+
+            <div class="float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mb-2">
+            
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="Email" class="text-center">Content</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <ejs-richtexteditor #fromRTE  [(value)]='value' required name="name" 
+                         formControlName="content"></ejs-richtexteditor>
+                </div>
+            </div>
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mb-2">
+            
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="pan" class="text-center">Meta Description</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <textarea name="" id="" cols="30" rows="5" formControlName="metadec" style="width: 100%;"></textarea>
+                </div>
+            </div>
+
+            <div class=" float-left m-0 p-0 col-xl-12 col-sm-12 col-lg-12 mb-2">
+                
+                <div class="float-left m-0 p-0 border col-xl-2 col-sm-12 col-lg-2">
+                    <label for="phn" class="text-center">Meta Keywords</label>
+                </div>
+                <div class="float-left lab col-xl-10 col-sm-12 col-lg-10">
+                    <textarea name="" id="" cols="30" rows="5" formControlName="Keywords" style="width: 100%;"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </form>
+<button class="btn btn-success" (click)="show()">sub</button>
+</div>
+<div *ngFor="let object of mailData">
+    <div [innerHTML]="object.description" class="mail-content border border-danger mt-3"></div>
+</div>

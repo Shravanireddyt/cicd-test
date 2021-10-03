@@ -1,0 +1,28 @@
+<div *ngIf="spinner" class="spinner-border text-primary" style="margin: 20% 40%;"></div>
+<div>
+    <table  *ngIf="!spinner" class="table table-responsive-sm table-hover table-outline mb-0" id="tab">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>PAN</th>
+            <!-- <th>Activation Status</th> -->
+            <th >Created Date</th>
+            <th>Action</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of uccData;let i=index">  
+            <td><button class="btn btn-primary">{{ person.id }}</button></td>
+            <td>{{ person.company_name }}</td>
+            <td>{{person.pan}}</td>
+              <!-- <td>{{person.kyc_status=='Y'?'Yes':'No'}}</td> -->
+            <td>{{ person.created_time | date:"MM/dd/yy"  }}</td>
+            <td><button class="btn btn-primary active" (click)="steps(person.reg_email)">steps</button></td>
+           
+          </tr>
+        </tbody>
+        
+      </table>
+</div>

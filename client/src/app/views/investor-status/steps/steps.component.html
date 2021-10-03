@@ -1,0 +1,119 @@
+<!-- <div *ngIf="dshow" class="border border-danger col-md-12 col-sm-12 col-xl-12 float-left">
+    <div class="col-md-2 col-sm-2 col-xl-2 float-left border m-0 p-0" *ngFor="let val of stack">
+        <div class="col-md-12 col-sm-12 col-xl-12 float-left  mr-5 p-0" (click)="openDetials(val)">
+            <div class="col-md-12 col-sm-12 col-xl-12 float-left">
+                <p class="tex-center">{{val.label}}</p>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xl-12 float-left" >
+                <img src="../../../../assets/img/ri.png" alt="" height="30px" width="40px">
+            </div>
+        </div>
+        
+    </div>
+    
+</div> -->
+
+
+
+<div class="container float-left m-0 p-0">
+  <div class="progress-bar float-left col-md-12 col-sm-12 col-xl-12 m-0 p-0" >
+    <div class="step ext border-right" *ngFor="let val of stack ; let i=index">
+            <div (click)="openDetials(val)">
+                <p class="text-left" style="font-size: 12px;">{{val.label}}</p>
+                <div class="bullet text-left" >
+                        <img *ngIf="val.completed=='yes'" src="../../../../assets/img/ri.png" alt="" height="30px" width="40px">
+                        <img *ngIf="val.completed=='no'" src="../../../../assets/img/wrong.png" alt="" height="30px" width="40px">
+                        <span *ngIf="i!=stack.length-1" class="ago">{{45867567967}}</span>
+                        <span *ngIf="i!=stack.length-1" class="bar"></span>
+                </div>
+                <div class="check fas fa-check"></div>
+            </div>
+    </div> 
+
+</div>
+<!-- <div class="form-outer">
+    <form action="#">
+      <div class="page slide-page">
+        <div class="title">
+Basic Info:</div>
+<div class="field">
+          <div class="label">
+First Name</div>
+<input type="text">
+        </div>
+<div class="field">
+          <div class="label">
+Last Name</div>
+<input type="text">
+        </div>
+<div class="field">
+          <button class="firstNext next">Next</button>
+        </div>
+</div>
+<div class="page">
+        <div class="title">
+Contact Info:</div>
+<div class="field">
+          <div class="label">
+Email Address</div>
+<input type="text">
+        </div>
+<div class="field">
+          <div class="label">
+Phone Number</div>
+<input type="Number">
+        </div>
+<div class="field btns">
+          <button class="prev-1 prev">Previous</button>
+          <button class="next-1 next">Next</button>
+        </div>
+</div>
+<div class="page">
+        <div class="title">
+Date of Birth:</div>
+<div class="field">
+          <div class="label">
+Date</div>
+<input type="text">
+        </div>
+<div class="field">
+          <div class="label">
+Gender</div>
+<select>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+<div class="field btns">
+          <button class="prev-2 prev">Previous</button>
+          <button class="next-2 next">Next</button>
+        </div>
+</div>
+<div class="page">
+        <div class="title">
+Login Details:</div>
+<div class="field">
+          <div class="label">
+Username</div>
+<input type="text">
+        </div>
+<div class="field">
+          <div class="label">
+Password</div>
+<input type="password">
+        </div>
+<div class="field btns">
+          <button class="prev-3 prev">Previous</button>
+          <button class="submit">Submit</button>
+        </div>
+</div>
+</form>
+</div> -->
+</div> 
+<!-- Somehow I got an error, so I comment the script tag, just uncomment to use -->
+<!-- <script src="script.js"></script> -->
+
+<div *ngIf="!StepsExist">
+        <h1 class="text-danger text-center">Investor not gone throw any steps</h1>
+</div>

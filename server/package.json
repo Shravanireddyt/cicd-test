@@ -1,0 +1,32 @@
+{
+    "name": "quiz-main",
+    "version": "1.0.0",
+    "description": "quiz main backend",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Takeoff-src/quiz-main.git"
+    },
+    "author": "CONVEY",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Takeoff-src/quiz-main/issues"
+    },
+    "homepage": "https://github.com/Takeoff-src/quiz-main#readme",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "body-parser-xml": "^2.0.1",
+        "chalk": "^4.1.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "jimp": "^0.16.1",
+        "mailgun-js": "^0.22.0",
+        "mongoose": "^5.11.14",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.7"
+    }
+}

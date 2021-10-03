@@ -1,0 +1,102 @@
+<button  (click)="closeModal()" class="btn btn-danger float-right"><span aria-hidden="true">&times;</span></button>
+<div *ngIf="which=='unsigned'" class="float-left mb-3 col-sm-12 col-md-12 col-xl-12 dfrm">
+    
+    <div class="float-left border-bottom col-sm-12 col-md-12 col-xl-12">
+            <h3 class="text-center">Upload Forms</h3>
+    </div>
+    
+
+    <div class="float-left border col-xs-12 col-sm-12 col-md-12 col-xl-12">
+        <div class="flaot-left col-sm-12 col-md-8 col-xl-8  ufrm" *ngIf="!uccStatus && !fatcaStatus">
+            <h3 >Investor not completed Onboarding</h3>
+        </div>
+        <div *ngIf="uccStatus  || fatcaStatus" class="float-left ufrm mt-3 mb-3 col-xs-12 col-sm-12 col-md-8 col-xl-8">
+
+                <div *ngIf="uccStatus" class="float-left border mb-2 col-xs-12 col-sm-12 col-md-12 col-xl-12">
+                    <div class="float-left col-xs-6 col-sm-6 col-md-6 col-xl-6">
+                       <h5 class="text-center">OnBoarding Form :</h5> 
+                    </div>
+                    <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                         <input class="border" type="file" name="onb" id="" (change)="handleFileInput($event)">
+                         <button class="btn btn-danger" (click)="submitUnsigned('onb')">submit</button>
+                     </div>
+                     
+                </div> 
+         
+                <div *ngIf="fatcaStatus" class="float-left mb-2 col-sm-12 col-md-12 col-xl-12">
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                    <h5 class="text-center">Fatca Form :</h5> 
+                 </div>
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                      <input type="file" name="fatca" id="" (change)="handleFileInput($event)">
+                      <button class="btn btn-danger" (click)="submitUnsigned('fatca')">submit</button>
+                  </div>
+              
+             </div> 
+         
+             <div *ngIf="fatcaStatus" class="float-left mb-2 col-sm-12 col-md-12 col-xl-12">
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                    <h5 class="text-center">Ubo Form :</h5> 
+                 </div>
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                      <input type="file" name="ubo" id="" (change)="handleFileInput($event)">
+                      <button class="btn btn-danger" (click)="submitUnsigned('ubo')">submit</button>
+                  </div>
+              
+             </div> 
+    
+           
+        </div>
+    </div>
+    
+</div>
+
+<div *ngIf="which=='signed'" class="float-left mb-3 col-sm-12 col-md-12 col-xl-12 dfrm">
+    
+    <div class="float-left border-bottom col-sm-12 col-md-12 col-xl-12">
+            <h3 class="text-center">Upload Forms</h3>
+    </div>
+    
+
+    <div class="float-left border col-xs-12 col-sm-12 col-md-12 col-xl-12">
+        <div class="flaot-left col-sm-12 col-md-8 col-xl-8  ufrm" *ngIf="!unsigned_form">
+            <h3 >Investor not Uploaded unsigned froms</h3>
+        </div>
+        <div *ngIf="unsigned_form" class="float-left ufrm mt-3 mb-3 col-xs-12 col-sm-12 col-md-8 col-xl-8">
+
+                <div class="float-left border mb-2 col-xs-12 col-sm-12 col-md-12 col-xl-12">
+                    <div class="float-left col-xs-6 col-sm-6 col-md-6 col-xl-6">
+                       <h5 class="text-center">OnBoarding Form :</h5> 
+                    </div>
+                    <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                         <input class="border" type="file" name="onb" id="" (change)="handleSignedFileInput($event)">
+                         <button class="btn btn-danger" (click)="submitSigned('onb')">submit</button>
+                     </div>
+                     
+                </div> 
+         
+                <div class="float-left mb-2 col-sm-12 col-md-12 col-xl-12">
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                    <h5 class="text-center">Fatca Form :</h5> 
+                 </div>
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                      <input type="file" name="fatca" id="" (change)="handleSignedFileInput($event)">
+                      <button class="btn btn-danger" (click)="submitSigned('fatca')">submit</button>
+                  </div>
+              
+             </div> 
+         
+             <div class="float-left mb-2 col-sm-12 col-md-12 col-xl-12">
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                    <h5 class="text-center">Ubo Form :</h5> 
+                 </div>
+                 <div class="float-left col-sm-6 col-md-6 col-xl-6">
+                      <input type="file" name="ubo" id="" (change)="handleSignedFileInput($event)">
+                      <button class="btn btn-danger" (click)="submitSigned('ubo')">submit</button>
+                  </div>
+              
+             </div>
+        </div>
+    </div>
+    
+</div>

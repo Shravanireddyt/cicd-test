@@ -1,0 +1,62 @@
+<div class="conatiner">
+    <div class="text-center">
+        <h2 class="text-info"><strong>Raise Alert &nbsp; <fa-icon [icon]="faBell"></fa-icon></strong></h2>
+        <h6>{{this.data.email}}</h6>
+    </div>
+    <div class="alertForm">
+        <div class="formgroup">
+            <form action="" [formGroup]="alertForm">
+                <label for=""><strong>Select Form :</strong></label>
+                <mat-form-field appearance="outline" style="width: 100%; ">
+                    <mat-label>select form name
+                    </mat-label>
+                    <mat-select value="P" formControlName='form_name' multiselect>
+                        <mat-option value="kyc_check">
+                            KYC-CHECK
+                        </mat-option>
+                        <mat-option value="kyc_process">
+                            KYC-PROCESS
+                        </mat-option>
+                        <mat-option value="onboarding">
+                            ONBOARDING
+                        </mat-option>
+                        <mat-option value="fatca">
+                            FATCA
+                        </mat-option>
+                        <mat-option value="ubo">
+                            UBO
+                        </mat-option>
+                        <mat-option value="image_upload">
+                            IMAGEUPLOAD
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <label for=""><strong>Select Fields :</strong></label>
+                <mat-form-field appearance="outline" style="width: 100%; ">
+                    <mat-label>Select Fields (*)
+                    </mat-label>
+                    <mat-select formControlName="formFields" [(value)]="selectedFields" multiple>
+                        <mat-option *ngFor="let topping of fieldsArray" [value]="topping">{{topping}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <label for="" class=""><strong>Subject :</strong></label>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Enter subject here(*)</mat-label>
+                    <input matInput placeholder="Placeholder" formControlName="title">
+                </mat-form-field>
+                <label for="" class=""><strong>Description :</strong></label>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Description(*)</mat-label>
+                    <textarea matInput placeholder="Your image is not valid, please upload new image." formControlName="description"></textarea>
+                </mat-form-field>
+            </form>
+            <div class="buttons mt-3 ">
+                <button mat-dialog-close class="btn btn-danger">CANCEL</button>
+                <button class="btn btn-primary float-right" style="border-radius: 0%;" (click)="raiseAlert()" id="raisebtn" [disabled]="alertForm.invalid">
+                    <span *ngIf="alertRaising"  class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                    <span>RAISE ALERT</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="app-body">
+    <main class="main  align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <div class="card mx-4">
+              <div class="card-body p-4">
+                <form [formGroup]="userForm">
+                  <h1 class="text-center">Create Users</h1>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" autocomplete="username" formControlName="username">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" autocomplete="new-password" formControlName="password">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">select role</label>
+                    <select class="form-control" id="exampleFormControlSelect1" formControlName="role">
+                      <option value="">select</option>
+                      <option value="admin">admin</option>
+                      <option value="support">support</option>
+                    </select>
+                  </div>
+                  <ng-multiselect-dropdown *ngIf="routes.length>0"
+                      name="route"
+                      [placeholder]="'Select Routes'"
+                      [data]="routes"
+                      formControlName="routes"
+                      [disabled]="disabled"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)">
+                  </ng-multiselect-dropdown>
+                  <button type="button" class="btn btn-block btn-success" (click)="createUser()">Create Account</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+
+  <table  class="table table-responsive-sm table-hover table-outline mb-0" id="tab">
+    <thead>
+      <tr>
+        <!-- <th>Select</th> -->
+        <th>S.No</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of userRoles;let i=index">  
+        <!-- <td><input type="checkbox" [value]="person.id" (change)="onCheckboxChange($event)"></td> -->
+        <td>{{ i+1 }}</td>
+        <td>{{ person.username }}</td>
+        <td>{{ person.role }}</td>
+        <td><button class="btn btn-danger" (click)="deleteUser(person.id)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+  

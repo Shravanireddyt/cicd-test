@@ -1,0 +1,46 @@
+<div class="table-responsive">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-outline mb-0 ">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Plan Type</th>
+                <th>Asset Class</th>
+                <th>Sub Fund Code</th>
+                <th>RTA Code</th>
+                <th>ISIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products ">
+                <td>{{ product.id }}</td>
+                <td>{{ product.product_code }}</td>
+                <td>{{ product.product_long_name }}</td>
+                <td>{{ product.product_category }}</td>
+                <td>{{ product.plan_type }}</td>
+                <td>{{ product.asset_class }}</td>
+                <td>{{product.sub_fund_code}}</td>
+                <td>{{product.rta_code}}</td>
+                <td>
+                    <button *ngIf="product.isin" (click)="openDialog(product.isin, product.product_long_name)">{{product.isin}}</button>
+                    <div *ngIf="!product.isin">NA</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;" *ngIf="mainSpinner">
+    <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div *ngIf="imageURL.length>0" class="float-left col-12 mt-5 border">
+  <!-- <button class=" float-right btn btn-primary active">Submit</button> -->
+  <h1>Investor docs</h1>
+       <div class="float-left  col-md-4 col-xl-4 col-sm-6" *ngFor="let val of imageURL;let i=index">
+         <div class="float-left border">{{val.checked}}
+          <img src="../../../../assets/img/ri.png" alt="sadf" width="100%">
+         </div>
+         
+          <div class="float-left m-0 p-0 col-md-12 col-xl-12 col-sm-6"> 
+            <div class="float-left border col-md-5 col-xl-5 col-sm-6">
+              <input type="checkbox" id="toggle-button-checkbox" name="doc{{i}}" [(ngModel)]="imageURL[i].checked" >
+            <label class="toggle-button-switch" for="doc{{i}}" (click)="isAllSelected($event,i)"></label>
+            <div class="toggle-button-text m-0 p-0 col-sm-12 col-xl-12 col-md-12">
+              <div class="toggle-button-text-on">ON</div>
+              <div class="toggle-button-text-off">OFF</div>
+            </div>
+            </div>
+            <div class="float-right m-0 p-0  col-md-6 col-xl-6 col-sm-6">
+              <button class="btn btn-success" (click)="viewDoc(val)">View</button>
+              <button class="btn btn-success" >Convert</button>
+            </div>
+            <div *ngIf="!imageURL[i].checked" class="float-left m-0 p-0  col-md-12 col-xl-12 col-sm-12">
+              <textarea name="" id="" cols="35" rows="3" placeholder="Reason" #des></textarea>
+              <button class="btn btn-danger active" (click)="raiseAlert(val,des.value,i,'docs')">Raise Alert</button>
+            </div>
+          </div>
+            
+          
+        </div>
+</div>
+
+
+<div *ngIf="no" class="border">
+  <h3 class="text-center">No Docs Found for This investor</h3>
+</div>
+
+
+

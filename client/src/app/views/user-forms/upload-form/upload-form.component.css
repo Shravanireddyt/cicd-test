@@ -1,0 +1,12 @@
+.ufrm{
+    margin-left:80px;
+}
+
+.dfrm{
+    height: 300px !important;
+}
+@media (max-width:765px){
+    .ufrm{
+        margin-left: 0px;
+    }
+}

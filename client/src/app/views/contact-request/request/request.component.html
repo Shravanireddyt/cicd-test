@@ -1,0 +1,39 @@
+<button class="btn btn-primary float-right mb-2" (click)="xlsDow('request')">xlsx</button>
+<div *ngIf="spinner" class="spinner-border text-primary" style="margin: 40% 10%;"></div>
+<button class="btn btn-danger" *ngIf="mulselected" (click)="deleteSelectedUsers()">Detele</button>
+<table *ngIf="!spinner" class="table table-responsive-sm table-hover table-outline mb-0" id="tab">
+    <thead class="thead-dark">
+        <tr>
+            <th>Select</th>
+            <th>S.No</th>
+            <th>CompanyName</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Phone</th>
+            <th>ContactedDate</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let val of contactData;let i=index">
+            <td><input type="checkbox" [value]="val.id" (change)="onCheckboxChange($event)"></td>
+            <td>{{i+1}}</td>
+            <td>{{val.company_name}}</td>
+            <td>{{val.firstname}}</td>
+            <td>{{val.designation}}</td>
+            <td><a href="mailto:{{val.email}}">{{val.email}}</a></td>
+            <td>{{val.ip_city}}</td>
+            <td><a href="tel:{{val.number}}">{{val.number}}</a></td>
+            <td>{{val.contact_date | date: 'short' }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+<button class="btn btn-danger" (click)="sendNewsletter()">SendNotifications</button>
+<button class="btn btn-primary active" (click)="subcribe()">Subscribe</button>

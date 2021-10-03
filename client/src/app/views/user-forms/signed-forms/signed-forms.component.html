@@ -1,0 +1,63 @@
+<div *ngIf="spinner" class="spinner-border text-primary" style="margin: 20% 40%;"></div>
+
+<div *ngIf="showDetails" class="float-left col-12 mt-5 border">
+  
+  <h3 class="text-center">Signed Forms</h3>
+         <div class="float-left  col-md-4 col-xl-4 col-sm-6" *ngFor="let val of imageURL;let i=index">
+           <div class="float-left border">
+            <img src="../../../../assets/img/pdf_tumbnail.png" alt="sadf" width="100%">
+           </div>
+           
+           <div class="float-left m-0 p-0 col-md-12 col-xl-12 col-sm-6"> 
+            <div class="float-left border col-md-5 col-xl-5 col-sm-6">
+              <input type="checkbox" id="toggle-button-checkbox" name="doc{{i}}" [(ngModel)]="imageURL[i].checked" >
+            <label class="toggle-button-switch" for="doc{{i}}" (click)="isAllSelected($event,i)"></label>
+            <div class="toggle-button-text m-0 p-0 col-sm-12 col-xl-12 col-md-12">
+              <div class="toggle-button-text-on">ON</div>
+              <div class="toggle-button-text-off">OFF</div>
+            </div>
+            </div>
+            <div class="float-right m-0 p-0  col-md-6 col-xl-6 col-sm-6">
+              <button class="btn btn-success" (click)="viewDoc(val)">View</button>
+              <button class="btn btn-success" >Convert</button>
+            </div>
+            <div *ngIf="!imageURL[i].checked" class="float-left m-0 p-0  col-md-12 col-xl-12 col-sm-12">
+              <textarea name="" id="" cols="35" rows="3" placeholder="Reason" #des></textarea>
+              <button class="btn btn-danger active" (click)="raiseAlert(val,des.value,i,'signed')">Raise Alert</button>
+            </div>
+          </div>
+          </div>
+  
+          <div class="float-left col-12 mt-5">
+            <button class=" float-right btn btn-primary active" (click)="upload()">Update</button>
+          </div>
+          
+          <!-- <button class="btn btn-success mt-3 float-right" (click)="back()">Go Back</button> -->
+  
+  </div>
+
+
+  <div *ngIf="no" class="text-center">
+    <h3 class="text-center">No Signed Forms Found for Investor!!!!!</h3>
+    <button class="btn btn-primary active" (click)="upload()">Upload</button>
+  </div>
+
+
+<!-- <div class="col-md-12 border">
+  <button class="btn btn-primary" draggable="true" (click)="addInputs('text')">text</button>
+  <button class="btn btn-primary" (click)="addInputs('email')">email</button>
+  <button class="btn btn-primary" (click)="addInputs('password')">password</button>
+  <button class="btn btn-primary" (click)="addInputs('radio')">rado</button>
+  <button class="btn btn-primary" (click)="addInputs('checkbox')">checkbox</button>
+</div> -->
+
+
+
+  <!-- <form name="inps">
+    <div *ngFor="let val of inputs">
+      <div class="form-group">
+        <input type='{{val.type}}' class="form-control" id="" placeholder="" [(ngModel)]="val.val" name="val.val">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="create()">create</button>
+  </form> -->

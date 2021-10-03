@@ -1,0 +1,157 @@
+<mat-dialog-content>
+    <h3><strong>ISIN </strong>: {{this.data.isin}}</h3>
+    <h3><strong>Name</strong> : {{this.data.name}}</h3>
+    <div class="text-center text-primary mb-3">
+        <h2>Morning Star Data:</h2>
+
+        <div style="text-align: center;" *ngIf="mainSpinner">
+            <div class="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <table *ngIf="dataAvailable" class="table table-responsive table-hover" style="z-index: 15 !important;">
+        <thead>
+            <tr>
+                <th scope="col">Fund Name</th>
+                <th scope="col">Fund Level Category</th>
+                <th scope="col">Broad Category Group</th>
+                <th scope="col">1YR Returns</th>
+                <th scope="col">3YR Returns</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Fund Size(Cr)</th>
+                <th scope="col">Fund Managers</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            <tr>
+                <td><span class="text-primary">{{schemeData.api.LegalName}}</span></td>
+                <td>{{schemeData.api.FundLevelCategoryName}}</td>
+                <td>{{schemeData.api.BroadCategoryGroup}}</td>
+                <td *ngIf="percentageChange1">
+                    <span class="text-success">
+                <fa-icon [icon]="caretUp"></fa-icon>{{schemeData.api.Return1Yr ? schemeData.api.Return1Yr + '%' : "NA"}}
+                </span>
+                </td>
+                <td *ngIf="!percentageChange1">
+                    <span class="text-danger">
+                <fa-icon [icon]="careDown"></fa-icon>
+                {{schemeData.api.Return1Yr ? schemeData.api.Return1Yr + '%' : "NA"}}
+                </span>
+                </td>
+                <td *ngIf="percentageChange3">
+                    <span class="text-success">
+                <fa-icon [icon]="caretUp"></fa-icon>
+                {{schemeData.api.Return3Yr ? schemeData.api.Return3Yr + "%" : "NA"}}
+                </span>
+                </td>
+                <td *ngIf="!percentageChange3">
+                    <span class="text-danger">
+                <fa-icon [icon]="careDown"></fa-icon>
+                {{schemeData.api.Return3Yr ? schemeData.api.Return3Yr + '%' : "NA"}}
+                </span>
+                </td>
+                <td>{{schemeData.api.Rating ? schemeData.api.Rating : "NA"}}</td>
+                <td>{{schemeData.api.AsOfOriginalReported}}</td>
+                <td>
+                    <div id="expander" data-toggle="collapse" data-target="#grandparentContent" data-role="expander" data-group-id="grandparent">
+                        <ul class="list-inline">
+                            <li id="grandparentIcon">
+                                <button class="btn btn-primary" style="border-radius: 20%;"> <fa-icon [icon]="users"></fa-icon></button>
+                            </li>
+                        </ul>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="collapse" id="grandparentContent" aria-expanded="true">
+        <div class="text-center">
+            <h2 class="text-primary">Fund Managers</h2>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Tenure</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let manager of fundManagers">
+                    <td>{{manager.Name}}</td>
+                    <td>{{manager.Role}}</td>
+                    <td>{{manager.Tenure}}&nbsp;Y</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="dataNotAvailable" class="text-center shadow-lg p-3 mb-5 bg-white rounded">
+        <h2>
+            <fa-icon [icon]="sadFace"></fa-icon>&nbsp;Data not avaialable</h2>
+    </div>
+    <div>
+        <div class="isinForm d-flex justify-content-center">
+            <div class="col-xl-12 shadow-lg p-3 mb-5 bg-white rounded d-flex flex-column justify-content-center">
+                <div class="title row text-center">
+                    <h2 class=" col-xl-12">Add SEO Data Here:</h2>
+                </div>
+                <form [formGroup]="seoForm">
+                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 mt-2">
+
+                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                            <label for="Email " class="text-center ">Meta Title</label>
+                        </div>
+                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                            <input type="text" class="form-control" formControlName="meta_title">
+                        </div>
+                    </div>
+                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 mt-2">
+
+                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                            <label for="Description " class="text-center ">Meta Description</label>
+                        </div>
+                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                            <textarea formControlName="meta_desc" class="form-control" id="" cols="20" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 mt-2">
+
+                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                            <label for="Keywords" class="text-center ">Key Words</label>
+                        </div>
+                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                            <textarea formControlName="meta_keys" class="form-control" id="" cols="30" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div *ngIf="seoStatus" class="text-center float-left col-xl-12 col-sm-12 col-lg-12 mt-2">
+
+                        <button (click)="updateSEO()" class="col-xl-2 col-md-2 col-sm-2 bt-6 isinBtn">
+                           
+                             <span *ngIf="seoSubmit"  class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;" role="status" aria-hidden="true"></span>
+                           <span *ngIf="!seoSubmit">Update SEO</span> </button>
+                    </div>
+                    <div *ngIf="!seoStatus" class="text-center float-left col-xl-12 col-sm-12 col-lg-12 mt-2">
+
+                        <button (click)="addSEO()" class="col-xl-2 col-md-2 col-sm-2 isinBtn bt-6 ">
+                        
+                             <span *ngIf="seoSubmit"  class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;" role="status" aria-hidden="true"></span>
+                           <span *ngIf="!seoSubmit" >Add SEO</span> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</mat-dialog-content>

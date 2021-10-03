@@ -1,0 +1,27 @@
+.datacontainer{
+    margin-top: 20px;
+    /* border: 1px solid red; */
+    float: left;
+}
+
+.lab{
+    margin-top:10px !important;
+}
+
+h4{
+    margin-left: 10px !important;
+}
+
+input{
+    
+    user-select: none !important; 
+}
+
+.txtlar{
+    font-size: 22px;
+    margin-left: 15px;
+}
+
+.date{
+    margin-right: 2%;
+}

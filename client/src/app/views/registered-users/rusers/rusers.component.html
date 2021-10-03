@@ -1,0 +1,59 @@
+<div class="downloadList">
+    <button *ngIf="!showDetails" class="btn btn-primary float-right mb-2" (click)="xlsDow('registered_users')">DOWNLOAD</button>
+</div>
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-responsive-sm table-hover table-outline mb-0" id="tab">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>KYC</th>
+                <th>PAN</th>
+                <th>Contact Details</th>
+                <th>Password Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let person of tot;let i=index">
+                <td>{{ i+1 }}</td>
+                <td>{{ person.name }}</td>
+                <td>{{ person.valid_pan == 1 ? 'COMPLAINT' : "NON_COMPLAINT"}}</td>
+                <td>{{ person.pan | uppercase}}</td>
+                <td>Email : {{person.mf_email ? person.mf_email : '-'}}
+                    <br> Phone : {{person.mf_phone ? person.mf_phone : '-'}}
+                    <br> E-OTP : {{person.mf_email_otp ? person.mf_email_otp : '-'}} | P-OTP : {{person.mf_phone_otp ? person.mf_phone_otp : '-'}}</td>
+                <td>{{person.password?'Yes':'No'}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th><input type="text" placeholder="Search name" name="search-name" /></th>
+                <th><input type="text" placeholder="Search kyc" name="search-kyc" /></th>
+                <th><input type="text" placeholder="Search pan" name="search-pan" /></th>
+                <th><input type="text" placeholder="Email | Phone" name="Email | phone" /></th>
+                <th><input type="text" placeholder="Search password" name="search-passverified" /></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div style="text-align: center;" *ngIf="mainSpinner">
+    <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div *ngIf="showDetails">
+
+    <div *ngFor="let keys of getkeys(usrdetails)">
+        {{keys}} : {{usrdetails[keys]}}
+    </div>
+    <button class="btn btn-success mt-2" (click)="back()">GoBack</button>
+</div>

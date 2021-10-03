@@ -1,0 +1,1647 @@
+<!-- mine -->
+<div *ngIf="!showUserInfo">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">PAN</th>
+                <th scope="col">Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let person of activeUsers;">
+                <th scope="row"><button type="button" class="btn btn-primary" (click)="details1(person.id)"><fa-icon [icon]="faUser"></fa-icon></button>
+                </th>
+                <td>{{person.company_name}}</td>
+                <td>{{person.pan}}</td>
+                <td>{{person.created_time}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;" *ngIf="mainSpinner">
+    <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div *ngIf="noInternet" class="col-xl-12 col-md-12">
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card shadow col-xl-6 col-md-12 text-center">
+            <div class="card-body">
+                <h2 class="text-danger">
+                    <fa-icon [icon]="faSad"></fa-icon>&nbsp; Check Your Internet Connection.</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showUserInfo">
+    <div class="page-content page-container" id="page-content">
+        <div class="usersteps" style="text-align: center;">
+            <div class="lds-ellipsis text-primary" *ngIf="!userStepsStatus">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="row" *ngIf="userStepsStatus">
+            <div class="col-xl-12 col-md-8 ">
+                <div class=" wrapper-progressBar wobble-hor-top">
+                    <ul class="progressBar">
+                        <li [ngClass]="this.userSteps.onboarding? 'active' : ''"><strong>UCC</strong>
+                            <p><strong>Date Added : </strong>{{this.userSteps.onboarding}}</p>
+                            <p><strong>Last Update : </strong>{{this.userSteps.onboarding_update ? this.userSteps.onboarding_update : "NOT UPDATED"}}</p>
+                        </li>
+                        <li [ngClass]="this.userSteps.fatca? 'active' : ''"><strong>FATCA</strong>
+                            <p><strong>Date Added : </strong>{{this.userSteps.fatca}}</p>
+                            <p><strong>Last Update : </strong>{{this.userSteps.fatca_update ? this.userSteps.fatca_update : "Not Updated"}}</p>
+                        </li>
+                        <li [ngClass]="this.userSteps.unsigned_form? 'active' : ''">
+                            <strong>UNSIGNED FORMS</strong>
+                            <p><strong>Date Added : </strong>{{this.userSteps.unsigned_form}}</p>
+                            <p><strong>Last Update : </strong>{{this.userSteps.unsigned_update ? this.userSteps.unsigned_update : "Not Updated"}}</p>
+                        </li>
+                        <li [ngClass]="this.userSteps.signed_form? 'active' : ''">
+                            <strong>SIGNED FROMS</strong>
+                            <p><strong>Date Added : </strong>{{this.userSteps.signed_form}}</p>
+                            <p><strong>Last Update : </strong>{{this.userSteps.signed_update ? this.userSteps.signed_update : "Not Updated"}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="padding">
+
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-8 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <h6 class="f-w-600">{{userInfo.company_name}}</h6>
+                                    <h5 class="f-w-600" *ngIf="userOnboarded">User Onboarded.</h5>
+                                    <h4 class="f-w-600">{{this.iinActiveStatus === 1 ? "ACTIVE" : "NOT ACTIVE"}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">EMAIL</p>
+                                            <h6 class="text-muted f-w-400">{{userInfo.mf_email}}</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">PHONE</p>
+                                            <h6 class="text-muted f-w-400">{{userInfo.mf_phone}}</h6>
+                                        </div>
+                                    </div>
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Other Info:</h6>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <p class="m-b-10 f-w-600">PAN</p>
+                                            <h6 class="text-muted f-w-400">{{userInfo.pan}}</h6>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p class="m-b-10 f-w-600">KYC</p>
+                                            <h6 class="text-muted f-w-400">{{userInfo.valid_pan === 1 ? "COMPLAINT" : "NON-COMPLAINT"}}</h6>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p class="m-b-10 f-w-600">Created Date</p>
+                                            <h6 class="text-muted f-w-400">{{userInfo.created_time | date:"MM/dd/yy "}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12" *ngIf="userOboardErros">
+                    <div class="card card-error user-card-full text-white text-bold" style="background: linear-gradient(90deg, hsla(0, 32%, 52%, 1) 0%, hsla(12, 88%, 56%, 1) 0.5%) ">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-xl-12 col-sm-8">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Errors: <span *ngIf="removeError" class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;" role="status" aria-hidden="true"></span></h6>
+                                    <div class="scrollable">
+                                        <div *ngIf="hasOnboardErros" class="spinner-border text-primary text-center " role="status ">
+                                            <span class="sr-only ">Loading...</span>
+                                        </div>
+                                        <ul *ngFor="let error of nseErrors.result">
+                                            <div class="d-flex justify-content-between card-text">
+                                                <li>{{error.nse_errors}}</li>
+                                                <button *ngIf="!removeError" class="btn text-white" (click)="deleteError(error.id)">
+                                                    
+                           <span > <fa-icon [icon]="faDel"></fa-icon></span>
+
+                                                </button>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- remove from here -->
+                <div class="row container d-flex justify-content-center ">
+                    <button class="btn btn-danger alertBTN" (click)="raiseAlert()"><fa-icon [icon]="faRight" class="alertIcon"></fa-icon>&nbsp;&nbsp;<span>Raise Alert</span></button>
+                    <div class="col-xl-12 col-md-12 col-sm-12 form-buttons">
+                        <button (click)="showboarding() " class="col-xl-2 col-md-2 col-sm-2 btnn bt-1">Onboarding<span *ngIf="!uccStatus "><img src="../../../../assets/img/ri.png " height="30px " class="bg-none " alt=" "></span></button>
+                        <div lass="spinner-border text-primary" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                        <button (click)="getOtherInfoOfUser('fatca_info')" class="col-xl-2 col-md-2 col-sm-2 btnn bt-2 ">
+                             <fa-icon [icon]="faDoc"></fa-icon>&nbsp;
+                            
+                             <span *ngIf="userFatcaStatus" class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;" role="status" aria-hidden="true"></span>
+                           <span *ngIf="!userFatcaStatus">Fatca</span>  </button>
+                        <button (click)="getUboData('ubo_info')" class="col-xl-2 col-md-2 col-sm-2 btnn bt-6 ">
+                             <fa-icon [icon]="faDoc"></fa-icon>&nbsp;
+                             <span *ngIf="userUboStatus"  class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;" role="status" aria-hidden="true"></span>
+                           <span *ngIf="!userUboStatus">UBO</span>  </button>
+                        <button (click)="showdocs() " class="col-xl-2 col-md-2 col-sm-2 btnn bt-3 "><fa-icon [icon]="faForm"></fa-icon>
+                             <span *ngIf="userDocsStatus"  class="spinner-border spinner-border-sm" style="width: 1rem; height: 1rem;" role="status" aria-hidden="true"></span>
+                           <span *ngIf="!userDocsStatus">DOCS</span> 
+                        </button>
+
+
+                        <button (click)="showunsigned() " class="col-xl-2 col-md-2 col-sm-2 btnn bt-4 "><fa-icon [icon]="faUnDoc"></fa-icon>&nbsp;Un-Forms<span *ngIf="unsigned_form "><img src="../../../../assets/img/ri.png " height="30px " class="bg-none " alt=" "></span></button>
+
+                    </div>
+                    <div class="mt-5 col-xl-12 col-md-12 form-buttons" style="justify-content: space-around;">
+
+                        <button (click)="showsigned() " class="col-xl-2 col-md-2 col-sm-2 btnn bt-5 "><fa-icon [icon]="faSnDoc"></fa-icon>&nbsp;SN-Forms<span *ngIf="signed_form "><img src="../../../../assets/img/ri.png " height="30px " class="bg-none " alt=" "></span></button>
+                    </div>
+
+                    <div *ngIf="showonboarding" class="mt-5 col-xl-12 col-md-12 col-sm-12 border bg-light 
+                    shadow-lg p-3 mb-5 bg-white rounded">
+                        <form [formGroup]="processMode">
+                            <h3 class=" text-center p-2 title-head" style="color:#0275d8 ; ">Select Process Mode & Holding Nature:</h3>
+                            <div class=" d-flex justify-content-center col-xl-12 col-sm-12 col-lg-6 " style="height: '10px';">
+                                <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+                                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                        <label for="actype " class="text-center ">Process Mode:</label>
+                                    </div>
+                                    <div class="float-left lab col-xl-8 col-sm-12 col-lg-9 ">
+                                        <mat-form-field appearance="fill " style="width: 100%; ">
+                                            <mat-label>process mode (required)
+                                            </mat-label>
+                                            <mat-select value="P" formControlName='process_mode'>
+                                                <mat-option value="P">
+                                                    Physical
+                                                </mat-option>
+                                                <mat-option value="D">
+                                                    Digital
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                                <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+                                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                        <label for="actype " class="text-center ">Holding Nature:</label>
+                                    </div>
+                                    <div class="float-left lab col-xl-8 col-sm-12 col-lg-9 ">
+                                        <mat-form-field appearance="fill " style="width: 100%; ">
+                                            <mat-label>holding nature (required)
+                                            </mat-label>
+                                            <mat-select formControlName='holding_nature'>
+                                                <mat-option value="AS">
+                                                    ANYONE / SURVIVOR
+                                                </mat-option>
+                                                <mat-option value="ES">
+                                                    EITHER / SURVIVOR
+                                                </mat-option>
+                                                <mat-option value="JO">
+                                                    JOINT
+                                                </mat-option>
+                                                <mat-option value="SI">
+                                                    SINGLE
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form [formGroup]="uccForm">
+                            <h3 class=" text-center p-2 title-head" style="color:#0275d8 ; ">
+                                <fa-icon [icon]="faUser" style="color: rgb(73, 134, 226);"></fa-icon>&nbsp;OnBoarding - Details
+                            </h3>
+                            <div>
+                                <div class="datacontainer col-xl-5 col-sm-12 col-lg-6 " formGroupName="userIdenForm">
+                                    <span class="txtlar mb-5 text-center"><fa-icon [icon]="faAddr"></fa-icon>&nbsp;Identity Details</span>
+                                    <div class="mt-5  float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="Email " class="text-center ">Email :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="email" class="form-control" formControlName="mf_email">
+                                        </div>
+                                    </div>
+
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="pan" class="text-center ">Pan :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='pan'>
+                                        </div>
+                                    </div>
+
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="phn " class="text-center ">Phone :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='mf_phone'>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="datacontainer col-xl-6 float-right col-sm-12 col-lg-6 " style="height: 500px;">
+                                    <span class="txtlar "><fa-icon [icon]="faLoca"></fa-icon>&nbsp;Address</span>
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 mt-2 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="add1 " class="text-center ">Address1 :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='address1'>
+                                        </div>
+                                    </div>
+
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="add2 " class="text-center ">Address2:</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='address2'>
+                                        </div>
+                                    </div>
+
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="city " class="text-center ">City :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='city'>
+                                        </div>
+                                    </div>
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-6 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="ifsc " class="text-center ">Selected State:</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='state' disabled>
+                                        </div>
+                                    </div>
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-6 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="ifsc " class="text-center ">State</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <mat-form-field appearance="fill" style="width: 100%;">
+                                                <mat-label>select state</mat-label>
+                                                <mat-select formControlName='state'>
+                                                    <mat-option *ngFor="let state of stateCodes" [value]="state.code">
+                                                        {{state.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-6 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="ifsc " class="text-center ">Selected Country:</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='country' disabled>
+                                        </div>
+                                    </div>
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="city " class="text-center ">Country :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <mat-form-field appearance="fill " style="width: 100%; ">
+                                                <mat-label>country</mat-label>
+                                                <mat-select formControlName='country'>
+                                                    <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                        {{country.country_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class=" float-left col-xl-12 col-sm-12 col-lg-12 ">
+
+                                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                            <label for="pin " class="text-center ">Pincode :</label>
+                                        </div>
+                                        <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                            <input type="text " class="form-control" formControlName='pincode'>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="mt-5 pd-10 datacontainer col-xl-12 col-sm-12 col-lg-12 border text-center ">
+                                    <span class="txtlar "><fa-icon [icon]="faBank"></fa-icon>&nbsp;Bank Details</span>
+                                    <div class="mt-3 ">
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-12 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="city " class="text-center ">Tax Status :</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>select tax status</mat-label>
+                                                    <mat-select formControlName='tax_type'>
+                                                        <mat-option value="05">AOP/BOI</mat-option>
+                                                        <mat-option value="12">Bank / Financial Institution</mat-option>
+                                                        <mat-option value="07">Body Corporate</mat-option>
+                                                        <mat-option value="04">Company</mat-option>
+                                                        <mat-option value="23">Foreign Inst. Invest</mat-option>
+                                                        <mat-option value="38">Global Development Network</mat-option>
+                                                        <mat-option value="72">Government Body</mat-option>
+                                                        <mat-option value="33">Gratuity Fund</mat-option>
+                                                        <mat-option value="03">HUF</mat-option>
+                                                        <mat-option value="01">Individual</mat-option>
+                                                        <mat-option value="47">Limited Liability Partnership</mat-option>
+                                                        <mat-option value="35">Mutual Fund</mat-option>
+                                                        <mat-option value="36">Mutual Fund FOF Scheme</mat-option>
+                                                        <mat-option value="48">Non-Profit organization [NPO]</mat-option>
+                                                        <mat-option value="37">NPS Trust</mat-option>
+                                                        <mat-option value="29">NRE-HUF(NRE)</mat-option>
+                                                        <mat-option value="26">NRI (MINOR)</mat-option>
+                                                        <mat-option value="28">NRI - Minor (NRO)</mat-option>
+                                                        <mat-option value="21">NRI - Repatriable (NRE)</mat-option>
+                                                        <mat-option value="11">NRI Through NRO A/c</mat-option>
+                                                        <mat-option value="27">NRO-HUF(NRO)</mat-option>
+                                                        <mat-option value="61">OCI - Repatriation</mat-option>
+                                                        <mat-option value="62">OCI - Non-Repatriation</mat-option>
+                                                        <mat-option value="02">On Behalf Of Minor</mat-option>
+                                                        <mat-option value="10">Others</mat-option>
+                                                        <mat-option value="22">Overseas Corp. Body</mat-option>
+                                                        <mat-option value="70">PIO</mat-option>
+                                                        <mat-option value="06">Partnership Firm</mat-option>
+                                                        <mat-option value="34" id="h">Pension Fund</mat-option>
+                                                        <mat-option value="13">Proprietorship</mat-option>
+                                                        <mat-option value="31">Provident Fund / EPF</mat-option>
+                                                        <mat-option value="43">>QFI - Corporate</mat-option>
+                                                        <mat-option value="45">QFI - Hedge Funds</mat-option>
+                                                        <mat-option value="42">QFI - Minors</mat-option>
+                                                        <mat-option value="41">QFI - Individual</mat-option>
+                                                        <mat-option value="46">QFI - Mutual Funds</mat-option>
+                                                        <mat-option value="44">QFI - Pension Funds</mat-option>
+                                                        <mat-option value="09">Society</mat-option>
+                                                        <mat-option value="32">Superannuation / Pension Fund</mat-option>
+                                                        <mat-option value="08">Trust</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center ">Account No:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='acc_no'>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">Bank Name:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Bank Name</mat-label>
+                                                    <mat-select [(value)]="selectedBank" formControlName='bank'>
+                                                        <mat-option *ngFor="let bank of bankcodes" [value]="bank.code">
+                                                            {{bank.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="ifsc " class="text-center ">IFSC:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='ifsc'>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="actype " class="text-center ">Account Type:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Account Type
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedAcT" formControlName='acc_type'>
+                                                        <mat-option value="CA">
+                                                            Current Account
+                                                        </mat-option>
+                                                        <mat-option value="SB">
+                                                            Savings Account
+                                                        </mat-option>
+                                                        <mat-option value="CC">
+                                                            Cash/Credit
+                                                        </mat-option>
+                                                        <mat-option value="FCNR">
+                                                            Foreign Currency Non Resident
+                                                        </mat-option>
+                                                        <mat-option value="NRE">
+                                                            Non Resident External Account
+                                                        </mat-option>
+                                                        <mat-option value="NRO">
+                                                            Non Resident Ordinary
+                                                        </mat-option>
+                                                        <mat-option value="OD">
+                                                            Overdraft Account
+                                                        </mat-option>
+                                                        <mat-option value="PSB">
+                                                            Post Office Savings Bank Account
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bcname " class="text-center ">Branch Name:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='branch_name'>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">BranchAddress</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName="branch_addr">
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Exemption</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>(required)</mat-label>
+                                                    <mat-select [(value)]="selectedExemtionOn" formControlName='exemption'>
+                                                        <mat-option *ngFor="let ec of exemptionCodes" [value]="ec.code">
+                                                            {{ec.sub_category}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">IIN</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName="iin">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                        <div class="mt-3 d-flex justify-content-center col-xl-12 ">
+                            <div class="col-xl-3 col-md-3 mt-5 ">
+                                <div lass="spinner-border text-primary " role="status ">
+                                    <span class="sr-only "></span>
+                                </div>
+                                <button class="a-btnn bt-1 " (click)='updateUcc() '>
+                                            <span *ngIf="userUpdated " class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                            <span *ngIf="!userUpdated ">Update-Ucc</span>
+                                        </button>
+                            </div>
+                            <div class="col-xl-9 col-md-3 mt-5 float-right">
+                                <button (click)="editUcc() " [disabled]="" class="a-btnn bt-4 submitBtn">
+                                     <span *ngIf="nseEditStatus" class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                    <span *ngIf="!nseEditStatus ">Update User</span>
+                                </button>
+                                <button (click)="submitucc() " [disabled]="uccForm.controls['iin'].value !== null ? true: false " class="a-btnn bt-4 submitBtn">
+                                     <span *ngIf="nseSubmission " class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                    <span *ngIf="!nseSubmission ">Submit</span>
+                                </button>
+                                <button [disabled]="iinActiveStatus === 1 ? true : false" data-toggle="modal" data-target="#exampleModalCenter" class="a-btnn bt-5 submitBtn">
+                                    <span *ngIf="nseSubmission " class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                    <span *ngIf="!nseSubmission ">RETRIGGER</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="showfatca" class="mt-5 col-xl-12 col-md-12 col-sm-12 border bg-light 
+                    shadow-lg p-3 mb-5 bg-white rounded">
+                        <h3 class=" text-center p-2 title-head" style="color:#0275d8 ; ">
+                            <fa-icon [icon]="faUser" style="color: rgb(73, 134, 226);"></fa-icon>&nbsp;fatca information
+                        </h3>
+                        <div class="">
+                            <div class="mt-5 pd-10 datacontainer col-xl-12 col-sm-12 col-lg-12  text-center " style="height: 400px;">
+                                <div class="">
+                                    <span class="txtlar "><fa-icon [icon]="faBank"></fa-icon>&nbsp;Additional KYC</span>
+                                    <div class="float-right">
+                                        <small>Created At: {{createdAt}}| </small>
+                                        <small>Updated At:</small>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <form [formGroup]='additionalKycForm'>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center ">Applicant Income Code</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Income</mat-label>
+                                                    <mat-select [(value)]="selectedIncomeCode" formControlName='app_income_code'>
+                                                        <mat-option *ngFor="let ic of incomeCodes" [value]="ic.value">
+                                                            {{ic.data}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">NetWork Sign</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                                                <select class="form-control" formControlName="net_worth_sign">
+                                                <option *ngFor="let sign of netWorth_signs" [ngValue]="sign">{{ sign }}</option>
+                                            </select>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="ifsc " class="text-center ">Networth</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='net_worth'>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="actype " class="text-center ">NetWorth Date</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Choose a date</mat-label>
+                                                    <input matInput [matDatepicker]="picker" formControlName='net_worth_date'>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bcname " class="text-center ">Occc Code</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Occupation</mat-label>
+                                                    <mat-select [(value)]="selectedOcc" formControlName='occ_code'>
+                                                        <mat-option *ngFor="let occ of occupationValues" [value]="occ.value">
+                                                            {{occ.data}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Corp Services</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Occupation</mat-label>
+                                                    <mat-select [(value)]="selectedCorSer" formControlName='corp_servs'>
+                                                        <mat-option *ngFor="let cs of corporateServices" [value]="cs.value">
+                                                            {{cs.data}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="text-center row">
+                                            <div class="col-xl-12 col-md-3 mt-5 ">
+                                                <div lass="spinner-border text-primary" role="status">
+                                                    <span class="sr-only "></span>
+                                                </div>
+                                                <button class="a-btnn bt-kyc-5 " (click)='updateKyc()'>
+                                                    <span *ngIf="userUpdated" class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status" aria-hidden="true"></span>
+                                                    <span *ngIf="!userUpdated">Update-KYC</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <div class="mt-5 pd-10 datacontainerfatca col-xl-12 col-sm-12 col-lg-12 text-center ">
+                                <span class="txtlar "><fa-icon [icon]="faDoc "></fa-icon>&nbsp;Fatca</span>
+                                <form [formGroup]='fatcaForm'>
+                                    <div class="mt-3 ">
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center ">Address type</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Address Type
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedAddressType" formControlName="addr_type">
+                                                        <mat-option value="1">
+                                                            Residential or Business
+                                                        </mat-option>
+                                                        <mat-option value="2">
+                                                            Residential
+                                                        </mat-option>
+                                                        <mat-option value="3">
+                                                            Business
+                                                        </mat-option>
+                                                        <mat-option value="4">
+                                                            Registered office
+                                                        </mat-option>
+                                                        <mat-option value="5">
+                                                            Unspecified
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">Country Of Incorporation</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>Select country</mat-label>
+                                                    <mat-select formControlName='country_of_birth'>
+                                                        <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                            {{country.country_name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="ifsc " class="text-center ">Place of Incorporation</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Bank Name</mat-label>
+                                                    <mat-select [(value)]="selectdState" formControlName='place_birth'>
+                                                        <mat-option *ngFor="let state of stateCodes" [value]="state.code">
+                                                            {{state.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="actype " class="text-center ">Tax Residence</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Account Type
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedResidence" formControlName='tax_residence' (selectionChange)="changeResidence($event.value)">
+                                                        <mat-option value="Y">
+                                                            Tax residency other than India
+                                                        </mat-option>
+                                                        <mat-option value="N">
+                                                            Tax residency: India
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="tax-res ">
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="bcname " class="text-center ">Country TR - 1</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <mat-form-field appearance="fill " style="width: 100%; ">
+                                                        <mat-label>Select country</mat-label>
+                                                        <mat-select formControlName='country_tax_residency1'>
+                                                            <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                                {{country.country_name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                            <div class=" col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">ID - 1</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                                        <mat-label>Account Type
+                                                        </mat-label>
+                                                        <mat-select formControlName='id1_type'>
+                                                            <mat-option value="C">
+                                                                PAN Card
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">TAX Payer Id - 1</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <input type="text " class="form-control " formControlName="tax_payer_identityno1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="hori-res ">
+                                        <div class="tax-res ">
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">Country TR - 2</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <mat-form-field appearance="fill " style="width: 100%; ">
+                                                        <mat-label>Select country</mat-label>
+                                                        <mat-select formControlName='country_tax_residency2'>
+                                                            <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                                {{country.country_name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">Id - 2</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                                        <mat-label>Account Type
+                                                        </mat-label>
+                                                        <mat-select formControlName='id2_type'>
+                                                            <mat-option value="A">
+                                                                Passport
+                                                            </mat-option>
+                                                            <mat-option value="B">
+                                                                Election ID Card
+                                                            </mat-option>
+                                                            <mat-option value="C">
+                                                                PAN Card
+                                                            </mat-option>
+                                                            <mat-option value="D">
+                                                                ID Card
+                                                            </mat-option>
+                                                            <mat-option value="E">
+                                                                Driving License
+                                                            </mat-option>
+                                                            <mat-option value="G">
+                                                                UIDIA / Aadhar letter
+                                                            </mat-option>
+                                                            <mat-option value="H">
+                                                                NREGA Job Card
+                                                            </mat-option>
+                                                            <mat-option value="O">
+                                                                Others
+                                                            </mat-option>
+                                                            <mat-option value="X">
+                                                                Not categorized
+                                                            </mat-option>
+                                                            <mat-option value="T">
+                                                                TIN [Tax Payer Identification Number]
+                                                            </mat-option>
+                                                            <mat-option value="C1">
+                                                                Company Identification Number
+                                                            </mat-option>
+                                                            <mat-option value="G1">
+                                                                US GIIN
+                                                            </mat-option>
+                                                            <mat-option value="E1">
+                                                                Global Entity Identification Number
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">TAX Payer Id - 2</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <input type="text " class="form-control " formControlName="tax_payer_identityno2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="hori-res ">
+                                        <div class="tax-res ">
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">Country TR - 3</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <mat-form-field appearance="fill " style="width: 100%; ">
+                                                        <mat-label>Select country</mat-label>
+                                                        <mat-select formControlName='country_tax_residency3'>
+                                                            <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                                {{country.country_name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">Id - 3</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                                        <mat-label>Account Type
+                                                        </mat-label>
+                                                        <mat-select formControlName='id3_type'>
+                                                            <mat-option value="A">
+                                                                Passport
+                                                            </mat-option>
+                                                            <mat-option value="B">
+                                                                Election ID Card
+                                                            </mat-option>
+                                                            <mat-option value="C">
+                                                                PAN Card
+                                                            </mat-option>
+                                                            <mat-option value="D">
+                                                                ID Card
+                                                            </mat-option>
+                                                            <mat-option value="E">
+                                                                Driving License
+                                                            </mat-option>
+                                                            <mat-option value="G">
+                                                                UIDIA / Aadhar letter
+                                                            </mat-option>
+                                                            <mat-option value="H">
+                                                                NREGA Job Card
+                                                            </mat-option>
+                                                            <mat-option value="O">
+                                                                Others
+                                                            </mat-option>
+                                                            <mat-option value="X">
+                                                                Not categorized
+                                                            </mat-option>
+                                                            <mat-option value="T">
+                                                                TIN [Tax Payer Identification Number]
+                                                            </mat-option>
+                                                            <mat-option value="C1">
+                                                                Company Identification Number
+                                                            </mat-option>
+                                                            <mat-option value="G1">
+                                                                US GIIN
+                                                            </mat-option>
+                                                            <mat-option value="E1">
+                                                                Global Entity Identification Number
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class=" float-left col-xl-8 col-sm-12 col-lg-6 ">
+
+                                                <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                    <label for="badd " class="text-center ">TAX Payer Id - 3</label>
+                                                </div>
+                                                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                    <input type="text " class="form-control " formControlName="tax_payer_identityno3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-5"></div>
+                                        <!-- <hr class="hori-res mt-5 mb-5" style="width: 60%;"> -->
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Foreign Financial Institute?</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Foreign Financial Institute
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedFFI" formControlName='ffi_drnfe' (selectionChange)="changeFFI($event.value)">
+                                                        <mat-option value="Y">
+                                                            YES
+                                                        </mat-option>
+                                                        <mat-option value="N">
+                                                            NO
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">NFFE - Category</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Category
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedFFICat" formControlName='nffe_catg' (selectionChange)="changeFFICategory($event.value)">
+                                                        <mat-option value="">
+                                                            Choose
+                                                        </mat-option>
+                                                        <mat-option value="L">
+                                                            Listed entity
+                                                        </mat-option>
+                                                        <mat-option value="RL">
+                                                            Related or Listed entity
+                                                        </mat-option>
+                                                        <mat-option value="A">
+                                                            Active NFFE
+                                                        </mat-option>
+                                                        <mat-option value="P">
+                                                            Passive NFFE
+                                                        </mat-option>
+                                                        <mat-option value="NA">
+                                                            Not Applicable -for Non NFFE
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Nature of Business</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control " formControlName="nature_bus">
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Active NFE sub Category</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control " formControlName="act_nfe_subcat">
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Stock Exchange</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Name of Stock Exchange
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedStock" formControlName='stock_exchange'>
+                                                        <mat-option value="B">
+                                                            BSE
+                                                        </mat-option>
+                                                        <mat-option value="N">
+                                                            NSE
+                                                        </mat-option>
+                                                        <mat-option value="O">
+                                                            Others
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Listed Company</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control " formControlName="listed_company">
+                                            </div>
+                                        </div>
+                                        <!-- <hr class="hori-res mt-5 mb-5" style="width: 60%;"> -->
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">GIIN Applicable ?</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>GIIN?
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedGIIN" formControlName='giin_applicable' (selectionChange)="changeGIINApplicable($event.value)">
+                                                        <mat-option value="Y">
+                                                            YES
+                                                        </mat-option>
+                                                        <mat-option value="N">
+                                                            NO
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">GIIN</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control " formControlName="giin">
+                                            </div>
+                                        </div>
+
+
+                                        <!--  -->
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Sponcer Availability?</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Sponser Available?
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedSponser" formControlName='sponcer_availability' (selectionChange)="changeSponserAvail($event.value)">
+                                                        <mat-option value="yes">
+                                                            YES
+                                                        </mat-option>
+                                                        <mat-option value="no">
+                                                            NO
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">Sponcer Entity</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control " formControlName="sponcer_entity">
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">GIIN EX.Category</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Bank Name</mat-label>
+                                                    <mat-select [(value)]="selectedExemtion" formControlName='giin_exemption'>
+                                                        <mat-option *ngFor="let ec of exemptionCodes" [value]="ec.code">
+                                                            {{ec.sub_category}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="badd " class="text-center ">GIIN Not Applicable Category</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>GIIN Not Applicable Category
+                                                    </mat-label>
+                                                    <mat-select [(value)]="selectedGIINotApp" formControlName='giin_not_app'>
+                                                        <mat-option value="AF">
+                                                            Applied for
+                                                        </mat-option>
+                                                        <mat-option value="NR">
+                                                            Not required to apply for
+                                                        </mat-option>
+                                                        <mat-option value="NO">
+                                                            Not obtained - Non-participating FFI
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="text-center row d-flex justify-content-center">
+                                <div class="col-xl-6 col-md-3 mt-5 ">
+                                    <button class="a-btnn bt-1 " (click)='updateFatca()'>
+                                            <span *ngIf="userUpdated " class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                            <span *ngIf="!userUpdated">Update-Fatca</span>
+                                        </button>
+                                </div>
+                                <div class="col-xl-6 col-md-3 mt-5 ">
+                                    <button (click)="submitFatca()" [disabled]="fatcaStatus" class="a-btnn bt-4 fatca">
+                                         <span *ngIf="nseSubmission " class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                        <span *ngIf="!nseSubmission ">Submit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="showUbo" class="mt-5 col-xl-12 col-md-12 col-sm-12 border bg-light 
+                    shadow-lg p-3 mb-5 bg-white rounded">
+                        <form [formGroup]="uboForm">
+                            <h3 class=" text-center p-2 title-head" style="color:#0275d8 ; ">
+                                <fa-icon [icon]="faUser" style="color: rgb(73, 134, 226);"></fa-icon>&nbsp;UBO - Details
+                            </h3>
+                            <div formArrayName="users">
+                                <div class="datacontainerubo mt-5 pd-10 col-xl-12 col-sm-12 col-lg-12 text-center " style="height: 600px;" *ngFor="let ele of uboForm.controls.users['controls']; let i=index">
+                                    <span class="txtlar "><fa-icon [icon]="faUser"></fa-icon>&nbsp;ShareHolder :{{ele.controls.ubo_name.value}}</span>
+                                    <div class="mt-3 " [formGroupName]="i">
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center ">UBO Code</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>ubo code
+                                                    </mat-label>
+                                                    <mat-select formControlName='ubo_master_codes'>
+                                                        <mat-option value="">UBO Code</mat-option>
+                                                        <mat-option value="C01">CP of legal person-ownership</mat-option>
+                                                        <mat-option value="C02">CP of legal person-other means</mat-option>
+                                                        <mat-option value="C03">CP of legal person-senior managing official</mat-option>
+                                                        <mat-option value="C04">CP of legal arrangement-trust-settlor</mat-option>
+                                                        <mat-option value="C05">CP of legal arrangement-trust-trustee</mat-option>
+                                                        <mat-option value="C06">CP of legal arrangement-trust-protector</mat-option>
+                                                        <mat-option value="C07">CP of legal arrangement-trust-beneficiary</mat-option>
+                                                        <mat-option value="C08">CP of legal arrangement-trust-other</mat-option>
+                                                        <mat-option value="C09">CP of legal arrangement-trust-other-settlor equivalent</mat-option>
+                                                        <mat-option value="C10">CP of legal arrangement-trust-other-trustee-equivalent</mat-option>
+                                                        <mat-option value="C11">CP of legal arrangement-trust-other-protector equivalent</mat-option>
+                                                        <mat-option value="C12">CP of legal arrangement-trust-other-beneficiary-equivalent</mat-option>
+                                                        <mat-option value="C13">CP of legal arrangement-trust-other-other-equivalent</mat-option>
+                                                        <mat-option value="C14">Unknown</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center ">UBO Name:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='ubo_name'>
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center ">UBO PAN:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='ubo_pan_no'>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">UBO Tax Residence Country:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>Tax Res Country</mat-label>
+                                                    <mat-select formControlName='ubo_country_tax_residency' (selectionChange)="changeUBOTaxR($event.value,i)">
+                                                        <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                            {{country.country_name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">UBO Citizenship Country:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>Citizenship Country</mat-label>
+                                                    <mat-select formControlName='ubo_cocn' (selectionChange)="changeUBOTaxR($event.value,i)">
+                                                        <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                            {{country.country_name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">UBO Birth Country:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>Birth Country</mat-label>
+                                                    <mat-select formControlName='ubo_cob' (selectionChange)="changeUBOTaxR($event.value,i)">
+                                                        <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                            {{country.country_name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="acno " class="text-center">Address type</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>Address Type
+                                                    </mat-label>
+                                                    <mat-select formControlName="ubo_add_type">
+                                                        <mat-option value="1">
+                                                            Residential or Business
+                                                        </mat-option>
+                                                        <mat-option value="2">
+                                                            Residential
+                                                        </mat-option>
+                                                        <mat-option value="3">
+                                                            Business
+                                                        </mat-option>
+                                                        <mat-option value="4">
+                                                            Registered office
+                                                        </mat-option>
+                                                        <mat-option value="5">
+                                                            Unspecified
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="ifsc " class="text-center ">UBO Address</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='ubo_addr'>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="ifsc " class="text-center">UBO Pincode:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control" formControlName='ubo_pin'>
+                                            </div>
+                                        </div>
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="bname " class="text-center ">UBO Country</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>Country</mat-label>
+                                                    <mat-select formControlName='ubo_country' (selectionChange)="changeUBOCountry($event.value, i)">
+                                                        <mat-option *ngFor="let country of countryData" [value]="country.country_code">
+                                                            {{country.country_name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div [ngSwitch]="ele.controls.ubo_country.value">
+                                            <div *ngSwitchCase="'IND'">
+                                                <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                        <label for="bname" class="text-center ">UBO State:</label>
+                                                    </div>
+                                                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                        <mat-form-field appearance="fill " style="width: 100%; ">
+                                                            <mat-label>State</mat-label>
+                                                            <mat-select formControlName='ubo_state'>
+                                                                <mat-option *ngFor="let state of stateCodes" [value]="state.code">
+                                                                    {{state.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                        <label for="bname " class="text-center">UBO City</label>
+                                                    </div>
+                                                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                        <mat-form-field appearance="fill " style="width: 100%; ">
+                                                            <mat-label>City</mat-label>
+                                                            <mat-select formControlName='ubo_city'>
+                                                                <mat-option *ngFor="let city of cityData" [value]="city.city">
+                                                                    {{city.city}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngSwitchDefault>
+                                                <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                        <label for="ifsc " class="text-center">UBO State</label>
+                                                    </div>
+                                                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                        <input type="text " class="form-control" formControlName='ubo_state'>
+                                                    </div>
+                                                </div>
+                                                <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                        <label for="ifsc " class="text-center">UBO City</label>
+                                                    </div>
+                                                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                        <input type="text " class="form-control" formControlName='ubo_city'>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" float-left col-xl-6 col-sm-12 col-lg-6 ">
+
+                                            <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab ">
+                                                <label for="ifsc " class="text-center ">UBO Hold Percentage:</label>
+                                            </div>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <input type="text " class="form-control " formControlName='ubo_hold_percent'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 d-flex justify-content-center ">
+                                        <button class="a-btnn bt-1 " (click)='updateUBO("update_ubo ",i)' style="padding: 10px;border-radius: 5px; ">
+                                                    <span *ngIf="userUpdated" class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                                    <span *ngIf="!userUpdated">Update-UBO</span>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="text-center row d-flex justify-content-center ">
+                                <div class="col-xl-6 col-md-3 mt-5 ">
+                                    <button (click)="submitFatca()" [disabled]="this.fatcaStatus" class="a-btnn bt-4 ">
+                                         <span *ngIf="nseSubmission " class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                        <span *ngIf="!nseSubmission ">Submit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div *ngIf="showDocs" class="showDocs mt-5 col-xl-12 col-md-12col-sm-12 border bg-lig shadow-lg p-3 mb-5 bg-white rounded">
+                        <div class="" style="margin: auto;">
+                            <div class="container d-flex align-items-center" style="height: 500px;" *ngFor="let item of userDocs | keyvalue">
+                                <div class="table-image col-xl-6 ">
+                                    <div class="table-infoo">
+                                        <div class="form-image d-flex">
+                                            <h3 style="flex-basis: 100%;text-transform: uppercase;"><strong>{{item.key}}:</strong></h3>
+                                            <div class="float-left lab col-xl-9 col-sm-12 col-lg-9 ">
+                                                <label for="bname " class="text-center">Image Type:</label>
+                                                <mat-form-field appearance="fill " style="width: 100%; ">
+                                                    <mat-label>select image type
+                                                    </mat-label>
+                                                    <mat-select>
+                                                        <mat-option value="DL">
+                                                            Driving License
+                                                        </mat-option>
+                                                        <mat-option value="PC">
+                                                            PAN Card
+                                                        </mat-option>
+                                                        <mat-option value="IP">
+                                                            IIN Physical Form
+                                                        </mat-option>
+                                                        <mat-option value="PA">
+                                                            Passport
+                                                        </mat-option>
+                                                        <mat-option value="AA">
+                                                            AADHAR Card
+                                                        </mat-option>
+                                                        <mat-option value="KF">
+                                                            KRA Form
+                                                        </mat-option>
+                                                        <mat-option value="CH">
+                                                            Cheque
+                                                        </mat-option>
+                                                        <mat-option value="AC">
+                                                            ACH Form
+                                                        </mat-option>
+                                                        <mat-option value="P">
+                                                            POA
+                                                        </mat-option>
+                                                        <mat-option value="AF">
+                                                            FATCA & AOF
+                                                        </mat-option>
+                                                        <mat-option value="PQ">
+                                                            POA Cheque
+                                                        </mat-option>
+                                                        <mat-option value="X">
+                                                            Transaction Image
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Verified</th>
+                                                    <th scope="col">Alert Raised</th>
+                                                    <th scope="col">TIFF Generated</th>
+                                                    <th scope="col">Submitted To NSE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>YES</td>
+                                                    <td>NO</td>
+                                                    <td>{{item.value.split('.').pop() ==='tiff' ? "YES" : "NO"}}</td>
+                                                    <td>NO</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="buttons">
+                                        <button class="btn btn-primary">View</button>
+                                        <button class="btn btn-primary" (click)="createTiff(item.key,item.value)" [disabled]="item.value.split('.').pop() ==='tiff' ? true : false">
+                                             <span *ngIf="creatingTiff" class="spinner-border spinner-border-sm " style="width: 1rem; height: 1rem; " role="status " aria-hidden="true "></span>
+                                            <span *ngIf="!creatingTiff">Create Tiff</span>
+                                        </button>
+                                        <button class="btn btn-primary float-right" style="border-radius: 0%;">SUBMIT</button>
+                                    </div>
+                                </div>
+                                <div class="info-image col-xl-6" style="width: auto; height: auto;">
+                                    <img style="width: 100%; " src="{{item.value}}" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div *ngIf="!dataFilled " class="col-xl-12 col-md-12 ">
+                        <div class="container mt-5 d-flex justify-content-center ">
+                            <div class="card shadow col-xl-6 col-md-12 text-center ">
+                                <div class="card-body ">
+                                    <h2 class="text-primary ">
+                                        <fa-icon [icon]="faSad "></fa-icon>&nbsp;&nbsp;{{dataMessage}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="showDocs " class="col-xl-12 col-md-12 mt-5 ">
+        <app-user-docs [mail]="selectedEmail "></app-user-docs>
+    </div>
+    <div *ngIf="showUnsigned " class="col-xl-12 col-md-12 col-sm-12 mt-5 ">
+        <app-unsigned-forms [mail]="selectedEmail "></app-unsigned-forms>
+    </div>
+
+    <div *ngIf="showSigned " class="col-xl-12 col-md-12 col-sm-12 border mt-5 ">
+        <app-signed-forms [mail]="selectedEmail "></app-signed-forms>
+    </div>
+</div>
+
+
+<!-- Modal  to show retrigger iin link-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Are you sure want to retrigger ?</strong></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <h4>{{retriggerMessage}}</h4>
+                <div *ngIf="updateIINStatus" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info float-left" (click)="updateIIN()">UPDATE USER</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="retrigger() ">RETRIGGER</button>
+            </div>
+        </div>
+    </div>
+</div>

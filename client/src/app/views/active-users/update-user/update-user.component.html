@@ -1,0 +1,175 @@
+<!-- 
+    <form  [formGroup]="uccform" >
+        <h3  class="text-center bg-light p-2 border-bottom" style="color:#0275d8 ;">OnBaording</h3>
+        <div >
+            <div class="datacontainer col-xl-6 col-sm-12 col-lg-6 ">
+                <span class="txtlar">Identity Details</span><span class="float-right date">{{usrdetails.created_time | date:"MM/dd/yy" }}</span>
+                <div class=" float-left  col-xl-12 col-sm-12 col-lg-12">
+                
+                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3  lab">
+                        <label for="Email" class="text-center">Email :</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <input   type="email" class="form-control" id="Email" placeholder="" value='{{usrdetails.mf_email}}'>
+                </div>
+                </div>
+
+                <div class=" float-left  col-xl-12 col-sm-12 col-lg-12">
+                
+                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3   lab">
+                        <label for="pan" class="text-center">Pan :</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <input   type="text" class="form-control" id="pan" placeholder="" value='{{usrdetails.pan}}'>
+                </div>
+                </div>
+    
+                <div class=" float-left  col-xl-12 col-sm-12 col-lg-12">
+                    
+                    <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                        <label for="phn" class="text-center">Phone :</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <input   type="text" class="form-control" id="phn" placeholder="" value='{{usrdetails.mf_phone}}'>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="datacontainer col-xl-6 col-sm-12 col-lg-6 ">
+                <span class="txtlar">Address</span><span class="float-right date">{{usrdetails.created_time | date:"MM/dd/yy" }}</span>
+                <div class=" float-left col-xl-12 col-sm-12 col-lg-12 mt-2">
+                
+                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3  lab">
+                        <label for="add1" class="text-center">Address1 :</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <textarea   name="" id="" cols="40" rows="" value='{{usrdetails.address1}}'></textarea>
+                </div>
+                </div>
+
+                <div class=" float-left  col-xl-12 col-sm-12 col-lg-12">
+                
+                    <div class="float-left lab col-xl-3 col-sm-12 col-lg-3   lab">
+                        <label for="add2" class="text-center">Address2:</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <input    type="text" class="form-control" id="add2" placeholder="" value='{{usrdetails.address2}}'>
+                </div>
+                </div>
+    
+                <div class=" float-left  col-xl-12 col-sm-12 col-lg-12">
+                    
+                    <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                        <label for="city" class="text-center">City :</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <input   type="text" class="form-control" id="city" placeholder="" value='{{usrdetails.city}}'>
+                </div>
+                </div>
+
+                <div class=" float-left  col-xl-12 col-sm-12 col-lg-12">
+                    
+                    <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                        <label for="pin" class="text-center">Pincode :</label>
+                    </div>
+                <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                    <input    type="text" class="form-control" id="pin" placeholder="" value='{{usrdetails.pincode}}'>
+                </div>
+                </div>
+
+            </div>
+            
+            <div class="datacontainer col-xl-12 col-sm-12 col-lg-12 border text-center">
+                <span class="txtlar">Bank Details</span><span class="float-right date">{{usrdetails.created_time | date:"MM/dd/yy" }}</span>
+                <div class="mt-3">
+
+            
+                    <div class=" float-left  col-xl-6 col-sm-12 col-lg-6">
+                    
+                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3 lab">
+                            <label for="acno" class="text-center">Account No:</label>
+                        </div> 
+                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                        <input   type="text" class="form-control" id="acno" placeholder="" value='{{usrdetails.acc_no}}'>
+                    </div>
+                    </div>
+
+                    <div class=" float-left  col-xl-6 col-sm-12 col-lg-6">
+                    
+                        <div class="float-left lab col-xl-3 col-sm-12 col-lg-3   lab">
+                            <label for="bname" class="text-center">Bank Name:</label>
+                        </div>
+                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                        <input   type="text" class="form-control" id="bname" placeholder="" value='{{usrdetails.bank}}'>
+                    </div>
+                    </div>
+        
+                    <div class=" float-left  col-xl-6 col-sm-12 col-lg-6">
+                        
+                        <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                            <label for="ifsc" class="text-center">IFSC:</label>
+                        </div>
+                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                        <input   type="text"  class="form-control" id="ifsc" placeholder="" value='{{usrdetails.ifsc}}'>
+                    </div>
+                    </div>
+
+                    <div class=" float-left  col-xl-6 col-sm-12 col-lg-6">
+                        
+                        <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                            <label for="actype" class="text-center">Account Type:</label>
+                        </div>
+                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                        <input   type="text" class="form-control" id="actype" placeholder="" value='{{usrdetails.acc_type}}'>
+                    
+                    </div>
+                    </div>
+
+                    <div class=" float-left  col-xl-6 col-sm-12 col-lg-6">
+                        
+                        <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                            <label for="bcname" class="text-center">Branch Name:</label>
+                        </div>
+                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                        <input   type="text" class="form-control" id="bcname" placeholder="" value='{{usrdetails.branch_name}}'>
+                    </div>
+                    </div>
+
+                    <div class=" float-left  col-xl-6 col-sm-12 col-lg-6">
+                        
+                        <div class="float-left  lab col-xl-3 col-sm-12 col-lg-3   lab">
+                            <label for="badd" class="text-center">BranchAddress</label>
+                        </div>
+                    <div class="float-left lab col-xl-9 col-sm-12 col-lg-9">
+                        <input   type="text"  class="form-control" id="badd" placeholder="" value='{{usrdetails.branch_addr}}'>
+                    </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="text-center form-group text-center lab">
+                <button (click)="update()" class="btn btn-primary mt-4">update</button>
+            </div>
+        </div>
+         
+    </form> -->
+
+
+    <form  [formGroup]="uccform" >
+        <h3  class="text-center bg-light p-2 border-bottom" style="color:#0275d8 ;">UserDetails</h3>
+        <div class=" float-left  col-xl-6 col-sm-12 col-lg-6" *ngFor="let key of keys(usrdetails);let i=index">
+                    
+                <div class="float-left lab col-xl-4 col-sm-12 col-lg-4 lab">
+                    <label for="cnt" class="text-center">{{key}}</label>
+                </div>
+            <div class="float-left lab col-xl-8 col-sm-12 col-lg-8">
+                <input   type="text" class="form-control" formControlName='{{key}}' id="cnt" >
+            </div>
+            </div>
+        <div class="text-center form-group text-center lab">
+            <button (click)="update()" class="btn btn-primary mt-4">update</button>
+        </div>
+         
+    </form>
